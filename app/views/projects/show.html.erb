@@ -49,7 +49,12 @@
            <%= t("projects.stars_count") %>
           &nbsp; &nbsp;
           <i class="fa fa-eye" aria-hidden="true"></i>
+          hll
+          <span id="star-count" class="noSelect"><%= @total %></span>
+          <i class="fa fa-eye" aria-hidden="true"></i>
+          ahoy
           <span id="star-count" class="noSelect"><%= @project.view %></span>
+          <span id="star-count" class="noSelect"><%= @redis.pfcount(@project.id) %></span>
            <%= t("projects.views_count") %> &nbsp; &nbsp;
         </div>
         <div class="row center-row projects-user-details-container">

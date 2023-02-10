@@ -62,6 +62,8 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
+    active_hll (0.1.1)
+      activerecord (>= 6)
     activejob (7.0.4.1)
       activesupport (= 7.0.4.1)
       globalid (>= 0.3.6)
@@ -253,6 +255,8 @@ GEM
     geocoder (1.7.3)
     globalid (1.0.1)
       activesupport (>= 5.0)
+    groupdate (6.2.0)
+      activesupport (>= 5.2)
     hairtrigger (0.2.25)
       activerecord (>= 5.0, < 8)
       ruby2ruby (~> 2.4)
@@ -683,6 +687,7 @@ PLATFORMS
   x64-mingw32
 
 DEPENDENCIES
+  active_hll
   acts_as_votable (~> 0.13.2)
   ahoy_matey
   aws-sdk-rails
@@ -708,6 +713,7 @@ DEPENDENCIES
   font-awesome-sass (~> 5.13.1)
   friendly_id (~> 5.4.2)
   geocoder
+  groupdate
   hairtrigger (~> 0.2.25)
   hirb
   hiredis

@@ -43,6 +43,9 @@ gem "jbuilder", "~> 2.11"
 gem "devise"
 
 gem "commontator", "~> 7.0.0"
+# hll
+gem "active_hll"
+gem "groupdate"
 
 # To generate sitemap.xml
 gem "sitemap_generator"

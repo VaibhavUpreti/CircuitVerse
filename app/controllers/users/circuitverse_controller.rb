@@ -11,6 +11,8 @@ class Users::CircuitverseController < ApplicationController
   def index
     @profile = ProfileDecorator.new(@user)
     @projects = @user.rated_projects
+    EventRollup.hll_upsert({ event_bucket: "home_#{Date.current}", visitor_ids: "visitor4" })
+    EventRollup.where(event_bucket: "home_#{Date.current}").update(time_bucket: Date.current)
   end
 
   def edit; end
@@ -39,6 +41,21 @@ class Users::CircuitverseController < ApplicationController
                          .select("groups.*, COUNT(group_members.id) as group_member_count")
                          .left_outer_joins(:group_members)
                          .group("groups.id")
+
+   # EventRollup.hll_upsert({  time_bucket: Date.current, visitor_ids: "visitor4" })
+
+    EventRollup.hll_upsert({  event_bucket: "group_#{Date.current}", visitor_ids: "visitor4" })
+
+    EventRollup.where(event_bucket: "group_#{Date.current}").update(time_bucket: Date.current)
+
+#    EventRollup.hll_upsert({ time_bucket: Date.tomorrow, visitor_ids: "visitor14" })
+    # visit = EventRollup.find()
+    # visit.update(path: "group")
+   # EventRollup.where(event_bucket: "group_#{Date.current}").update(path: "group", : "group_#{Date.current}")
+   
+    EventRollup.where(event_bucket: "group_#{Date.current}" ).update(time_bucket: Date.current)
+
+                            # , visitor_ids: current_user.id })
   end
 
   private

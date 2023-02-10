@@ -13,6 +13,10 @@ class ProjectsController < ApplicationController
   before_action :sanitize_name, only: %i[create update]
   before_action :sanitize_project_description, only: %i[show edit]
 
+  # before_action  :generate_view_token
+
+  # after_action :create_bucket
+
   # GET /projects
   # GET /projects.json
   def index
@@ -35,6 +39,20 @@ class ProjectsController < ApplicationController
     @collaboration = @project.collaborations.new
     @admin_access = true
     commontator_thread_show(@project)
+    # EventRollup.hll_upsert({ time_bucket: Date.today, visitor_ids: current_visit.id })
+    # need to know which user is logining in, and users will login multiple times, so we need to adjust views for that.
+    # one solution could be to make time_buckets daily and
+    @ipa = request.location
+    @result = Geocoder.search(@ipa)
+    @user_agent = request.user_agent
+    @req_id = request.user_agent
+    # @meow = Rack::Request.new(env).ip
+
+    @redis = Redis.get(host: "localhost")
+    @redis.pfadd(@project.id, @req_id)
+
+    # Rails.cache.write(@project.id, @req_id)
+    # ProjectView.hll_add(visitor_ids: @req_id)
   end
 
   # GET /projects/1/edit
@@ -96,6 +114,8 @@ class ProjectsController < ApplicationController
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end
+    @redis = Redis.new(host: "localhost")
+    @redis.pfadd(@project.id, @req_id)
   end
 
   # DELETE /projects/1

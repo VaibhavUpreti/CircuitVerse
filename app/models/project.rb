@@ -29,6 +29,7 @@ class Project < ApplicationRecord
   has_one :grade, dependent: :destroy
   has_one :project_datum, dependent: :destroy
   has_many :notifications, as: :notifiable
+  #after_create_commit :create_bucket
 
   scope :public_and_not_forked,
         -> { where(project_access_type: "Public", forked_project_id: nil) }
@@ -88,6 +89,10 @@ class Project < ApplicationRecord
       star.destroy!
       false
     end
+  end
+
+  def create_bucket
+    ProjectView.hll_upsert({ project_id: @project.id, visitor_ids: current_user.id })    
   end
 
   def fork(user)
