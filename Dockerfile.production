@@ -25,7 +25,7 @@ COPY . .
 
 RUN RAILS_ENV=production \
     SECRET_KEY_BASE=1 \
-    # DATABASE_URL=postgres://nulldb \
+    DATABASE_URL=postgres://nulldb \
 		DISABLE_FLIPPER=true \
     bundle exec rails assets:precompile && \
 	  yarn cache clean
