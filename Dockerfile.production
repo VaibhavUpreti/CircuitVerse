@@ -1,10 +1,10 @@
 FROM --platform=$BUILDPLATFORM ruby:3.2.1 as builder
 
-ARG BUILDPLATFORM 
+ARG BUILDPLATFORM
 ENV NODE_ENV=production
 
 RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash -
-RUN apt-get update -qq && apt-get install -y --no-install-recommends --auto-remove nodejs imagemagick
+RUN apt-get update -qq && apt-get install -y --no-install-recommends --auto-remove nodejs imagemagick libvips
 
 RUN npm install --global yarn
 
@@ -25,7 +25,7 @@ COPY . .
 
 RUN RAILS_ENV=production \
     SECRET_KEY_BASE=1 \
-    DATABASE_URL=postgres://nulldb \
+    # DATABASE_URL=postgres://nulldb \
 		DISABLE_FLIPPER=true \
     bundle exec rails assets:precompile && \
 	  yarn cache clean
@@ -47,7 +47,7 @@ ENV BUNDLE_WITHOUT="development:test"
 ENV RAILS_SERVE_STATIC_FILES="true"
 # ENV LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libjemalloc.so.2
 
-ARG REDIS_URL="redis://localhost:6379"
+# ARG REDIS_URL="redis://localhost:6379"
 
 
 RUN apt-get update -qq && apt upgrade -y && apt-get install -y --no-install-recommends --auto-remove curl  \
