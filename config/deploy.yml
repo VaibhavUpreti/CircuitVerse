@@ -1,7 +1,7 @@
 service: circuitverse
 image: vaibhavupreti/circuitverse
 servers:
-  - <%= ENV.fetch("SERVER_IP") %>
+  - <%= ENV["SERVER_IP"] %>
 registry:
   server: ghcr.io
   username: vaibhavupreti
@@ -10,13 +10,13 @@ registry:
 
 env:
    clear:
-     MEOW: meow    
+     MEOW: meow
      # REDIS_URL: redis://:6379/0
    secret:
      - RAILS_MASTER_KEY
      - REDIS_URL
      - POSTGRES_URL
-# Use a different ssh user than root
+
 ssh:
   user: ubuntu
 
@@ -26,5 +26,5 @@ builder:
 accessories:
   yosys2digitaljs-server:
     image: ghcr.io/circuitverse/yosys2digitaljs-server:master
-    host: <%= ENV.fetch("SERVER_IP") %>
+    host: <%= ENV["SERVER_IP"] %>
     port: 2812
