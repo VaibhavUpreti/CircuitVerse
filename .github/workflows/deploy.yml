@@ -1,0 +1,70 @@
+name: Deploy to Server
+on:
+  push:
+    branches:
+      - master
+  workflow_run:
+    workflows:
+      - 'codeql-analysis.yml'
+      - 'codeql.yml'
+      - 'docker-compose.yml'
+      - 'docker-publish.yml'
+      - 'docs.yml'
+      - 'jest.yml'
+      - 'language_checker.yml'
+      - 'rubyonrails.yml'
+    types:
+      - completed
+
+jobs:
+  deploy-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Out Code
+        uses: actions/checkout@v2
+
+      - name: Set Up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 'your-ruby-version-here'
+
+      - name: Install mrsk
+        run: gem install mrsk
+
+      - name: Configure SSH
+        uses: webfactory/ssh-agent@v0.5.2
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Release acquired locks
+        run: mrsk lock release
+
+      - name: Deploy with mrsk
+        run: mrsk deploy -vvvv --skip_push
+
+
+      # Either install docker and run mrsk deploy on the runner
+      # or run with --skip_push
+      # Not needed
+      - name: SSH into AWS EC2 instance
+        uses: webfactory/ssh-agent@v0.5.1
+        with:
+          ssh-private-key: ${{ secrets.AWS_SSH_PRIVATE_KEY }}
+          known_hosts: ${{ secrets.AWS_KNOWN_HOSTS }}
+
+      # Extras
+      - name: SSH into the Server
+        env:
+          MRSK_REGISTRY_PASSWORD: ${{ secrets.MRSK_REGISTRY_PASSWORD }}
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          HOSTNAME: ${{secrets.SSH_HOST}}
+          USER_NAME: ${secrets.USER_NAME}
+        run: ssh -i ssh-private-key ${USER_NAME}@${HOSTNAME}
+
+      - name: Change Directory on AWS EC2 instance
+        run: cd /ubuntu/home/main/CircuitVerse
+
+      - name: Update Codebase
+        run: git pull
+
