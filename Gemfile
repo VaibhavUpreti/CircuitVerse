@@ -193,4 +193,4 @@ gem "noticed", "~> 1.6"
 gem "aws-sdk-s3", "~> 1.116"
 gem "image_processing", "~> 1.12"
 
-gem "mrsk", "~> 0.14.0"
+gem "mrsk"
