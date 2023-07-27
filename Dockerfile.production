@@ -60,8 +60,6 @@ RUN apt-get update -qq && apt upgrade -y && apt-get install -y --no-install-reco
 
 WORKDIR /usr/src/app
 
-# ENTRYPOINT ["/rails/bin/docker-entrypoint"]
-
 EXPOSE 3000
 CMD rm -f tmp/pids/server.pid \
   && bundle exec rails db:migrate \
