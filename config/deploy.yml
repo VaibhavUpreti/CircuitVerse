@@ -23,12 +23,9 @@ ssh:
   user: ubuntu
 
 builder:
-  local:
-    arch: amd64
   remote:
     arch: amd64
     host: ssh://ubuntu@34.210.157.109
-
   dockerfile: Dockerfile.production
 
 accessories:
