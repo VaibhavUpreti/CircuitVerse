@@ -5,7 +5,7 @@ RUN mkdir /circuitverse
 WORKDIR /circuitverse
 
 # install dependencies
-RUN apt-get update -qq && apt-get install -y imagemagick shared-mime-info && apt-get clean
+RUN apt-get update -qq && apt-get install -y imagemagick shared-mime-info libvips && apt-get clean
 
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash \
  && apt-get update && apt-get install -y nodejs && rm -rf /var/lib/apt/lists/* \
@@ -26,6 +26,11 @@ RUN yarn install
 # copy source
 COPY . /circuitverse
 RUN yarn build
+
+# Solargraph config
+RUN solargraph download-core
+RUN solargraph bundle
+RUN yard config --gem-install-yri
 
 # generate key-pair for jwt-auth
 RUN openssl genrsa -out /circuitverse/config/private.pem 2048
