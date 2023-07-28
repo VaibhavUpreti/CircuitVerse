@@ -10,7 +10,7 @@ registry:
 
 env:
    clear:
-     MEOW: meow
+     RAILS_SERVE_STATIC_FILES: true
      # REDIS_URL: redis://:6379/0
    secret:
      - RAILS_MASTER_KEY
