@@ -25,7 +25,7 @@ env:
      RAILS_SERVE_STATIC_FILES: true
      # REDIS_URL: 'redis://172.17.0.1:6379/0'
      RAILS_LOG_TO_STDOUT: 1
-     PORT: 3001
+     # PORT: 3001
    secret:
      - RAILS_MASTER_KEY
      - REDIS_URL
@@ -45,14 +45,6 @@ accessories:
     image: ghcr.io/circuitverse/yosys2digitaljs-server:master
     host: <%= ENV["SERVER_IP"] %>
     port: 2812
-
-traefik:
-  options:
-    publish:
-      - 3001:3001
-  args:
-    entrypoints.web.address: ':80'
-    entrypoints.otherentrypoint.address: ':3001'
 
 healthcheck:
   path: /up
