@@ -1,7 +1,7 @@
 service: circuitverse
 image: vaibhavupreti/circuitverse
 servers:
-  web_main:
+  web:
     - <%= ENV["SERVER_IP"] %>
   #sidekiq:
   #  hosts:
