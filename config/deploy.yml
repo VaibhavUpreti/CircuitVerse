@@ -13,7 +13,6 @@ servers:
   #
   # docker run ... --cap-add --cpu-count 4 ...
 
-
 registry:
   server: ghcr.io
   username: vaibhavupreti
@@ -23,9 +22,7 @@ registry:
 env:
    clear:
      RAILS_SERVE_STATIC_FILES: true
-     # REDIS_URL: 'redis://172.17.0.1:6379/0'
      RAILS_LOG_TO_STDOUT: 1
-     # PORT: 3001
    secret:
      - RAILS_MASTER_KEY
      - REDIS_URL
