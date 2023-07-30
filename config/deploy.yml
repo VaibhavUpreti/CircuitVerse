@@ -23,7 +23,7 @@ env:
    clear:
      RAILS_SERVE_STATIC_FILES: true
      RAILS_LOG_TO_STDOUT: 1
-     PORT: 3001
+     # PORT: 3001
    secret:
      - RAILS_MASTER_KEY
      - REDIS_URL
