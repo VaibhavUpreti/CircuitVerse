@@ -58,6 +58,8 @@ traefik:
     volume:
       - /tmp/example.json:/tmp/example.json
     memory: 512m
+  args:
+    api.dashboard: true
   labels:
     traefik.enable: "true"
     traefik.http.routers.dashboard.rule: Host(`traefik.cv-mrsk.vaibhavupreti.me`)
