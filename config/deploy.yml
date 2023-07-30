@@ -52,10 +52,7 @@ healthcheck:
   max_attempts: 8
 
 traefik:
-  host_port: 8080
   options:
-    publish:
-      - 8080:8080
     volume:
       - /tmp/example.json:/tmp/example.json
     memory: 512m
