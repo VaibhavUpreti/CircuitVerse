@@ -53,9 +53,9 @@ healthcheck:
 
 traefik:
   # host_port: 9090
-  options:
-    publish:
-      - 8080:8080
+  # options:
+  #   publish:
+  #     - 8080:8080
   args:
     api.dashboard: true
     # entrypoints.web.address: ':8080'
