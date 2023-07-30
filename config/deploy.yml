@@ -53,16 +53,10 @@ healthcheck:
 
 traefik:
   args:
-    api.dashboard: true
     volume:
       - /tmp/example.json:/tmp/example.json
     memory: 512m
 
 labels:
-  traefik.enable: "true"
-  traefik.http.routers.dashboard.rule: Host(`cv-mrsk.vaibhavupreti.me`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
-  traefik.http.routers.dashboard.service: "api@internal"
-  traefik.http.routers.dashboard.middlewares: "auth"
-  traefik.http.middlewares.auth.basicauth.users: test:$2y$05$H2o72tMaO.TwY1wNQUV1K.fhjRgLHRDWohFvUZOJHBEtUXNKrqUKi
   traefik.http.routers.circuitverse-web.rule: Host(`cv-mrsk.vaibhavupreti.me`)
   # traefik.http.services.circuitverse.loadbalancer.server.port: 8080
