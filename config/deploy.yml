@@ -68,5 +68,10 @@ traefik:
     traefik.http.middlewares.auth.basicauth.users: test:$2y$05$H2o72tMaO.TwY1wNQUV1K.fhjRgLHRDWohFvUZOJHBEtUXNKrqUKi
 
 labels:
+  traefik.enable: "true"
   traefik.http.routers.circuitverse-web.rule: Host(`cv-mrsk.vaibhavupreti.me`)
+  traefik.http.routers.dashboard.rule: Host(`traefik.cv-mrsk.vaibhavupreti.me`)
+  traefik.http.routers.dashboard.service: "api@internal"
+  traefik.http.routers.dashboard.middlewares: "auth"
+  traefik.http.middlewares.auth.basicauth.users: test:$2y$05$H2o72tMaO.TwY1wNQUV1K.fhjRgLHRDWohFvUZOJHBEtUXNKrqUKi
   # traefik.http.services.circuitverse.loadbalancer.server.port: 8080
