@@ -45,6 +45,4 @@ accessories:
     port: 2812
 
 healthcheck:
-  path: /up
-  port: 3001
   max_attempts: 8
