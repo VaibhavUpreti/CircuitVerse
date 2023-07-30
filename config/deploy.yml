@@ -52,16 +52,25 @@ healthcheck:
   max_attempts: 8
 
 traefik:
-  host_port: 9090
+  # host_port: 9090
   options:
     publish:
-      - 9090:9090
+      - 8080:8080
   args:
-    entrypoints.web.address: ':9090'
+    api.dashboard: true
+    # entrypoints.web.address: ':8080'
     volume:
       - /tmp/example.json:/tmp/example.json
     memory: 512m
+  labels:
+    traefik.enable: "true"
+    traefik.http.routers.dashboard.rule: Host(`traefik.example.com`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
+    traefik.http.routers.dashboard.service: "api@internal"
+    traefik.http.routers.dashboard.middlewares: "auth"
+    traefik.http.middlewares.auth.basicauth.users: test:idkidk
+
+
 
 labels:
   traefik.http.routers.circuitverse-web.rule: Host(`cv-mrsk.vaibhavupreti.me`)
-  traefik.http.services.circuitverse.loadbalancer.server.port: 9090
+  # traefik.http.services.circuitverse.loadbalancer.server.port: 8080
