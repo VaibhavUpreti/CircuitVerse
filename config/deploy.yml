@@ -1,7 +1,8 @@
 service: circuitverse
 image: vaibhavupreti/circuitverse
 servers:
-  web_cv:
+  web:
+    traefik: false
     hosts:
       - <%= ENV["SERVER_IP"] %>
     options:
