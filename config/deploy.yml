@@ -52,10 +52,16 @@ healthcheck:
   max_attempts: 8
 
 traefik:
+  host_port: 9090
   options:
+    publish:
+      - 9090:9090
+    args:
+      entrypoints.web.address: ':9090'
     volume:
       - /tmp/example.json:/tmp/example.json
     memory: 512m
 
 labels:
   traefik.http.routers.circuitverse-web.rule: Host(`cv-mrsk.vaibhavupreti.me`)
+  traefik.http.services.circuitverse.loadbalancer.server.port: 9090
