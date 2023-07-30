@@ -56,8 +56,8 @@ traefik:
   options:
     publish:
       - 9090:9090
-    args:
-      entrypoints.web.address: ':9090'
+  args:
+    entrypoints.web.address: ':9090'
     volume:
       - /tmp/example.json:/tmp/example.json
     memory: 512m
