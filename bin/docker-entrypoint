@@ -2,7 +2,7 @@
 
 set -e
 
-cp -r /usr/src/app/public /usr/src/app
+cp -r /usr/src/app/public /usr/src
 
 if [ "${*}" == "./usr/src/app/bin/rails server" ]; then
 	rm -f /usr/src/app/tmp/pids/server.pid
