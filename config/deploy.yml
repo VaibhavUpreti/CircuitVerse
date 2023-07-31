@@ -12,9 +12,6 @@ servers:
     hosts:
       - <%= ENV["SERVER_IP"] %>
     cmd: bundle exec sidekiq -e production -q default -q mailers -d -L tmp/sidekiq.log
-    options:
-      cap-add: true
-      cpu-count: 1
 
 registry:
   server: ghcr.io
