@@ -2,9 +2,9 @@
 
 set -e
 
-cp -r /public /app
+cp -r /usr/src/app/public /usr/src/app
 
-if [ "${*}" == "./bin/rails server" ]; then
+if [ "${*}" == "./usr/src/app/bin/rails server" ]; then
 	rm -f /usr/src/app/tmp/pids/server.pid
 	/usr/src/app/bin/rails db:prepare
 fi
