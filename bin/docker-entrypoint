@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -e
+
+cp -r /public /app
+
+if [ "${*}" == "./bin/rails server" ]; then
+	rm -f /usr/src/app/tmp/pids/server.pid
+	/usr/src/app/bin/rails db:prepare
+fi
+
+exec "$@"
