@@ -28,17 +28,17 @@ RUN RAILS_ENV=production \
     DATABASE_URL=postgres://nulldb \
 	DISABLE_FLIPPER=true \
     bundle exec rails assets:precompile && \
-    yarn cache clean && \
-    rm -rf node_modules spec && \
-    bundle exec bootsnap precompile --gemfile app/ lib/
+    yarn cache clean
 
-# RUN rm -rf node_modules spec
-# RUN bundle exec bootsnap precompile --gemfile app/ lib/
+RUN rm -rf node_modules spec
+RUN bundle exec bootsnap precompile --gemfile app/ lib/
 
 FROM --platform=linux/amd64 ruby:3.2.1-slim as app
 
 COPY --from=builder /usr/src/app /usr/src/app
 
+ENV NODE_ENV=production
+ENV RAILS_ENV=production
 ENV BUNDLE_PATH='vendor/bundle'
 ENV RAILS_LOG_TO_STDOUT=true
 ENV BUNDLE_DEPLOYMENT=true
