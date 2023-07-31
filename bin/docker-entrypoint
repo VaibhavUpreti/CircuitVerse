@@ -4,9 +4,10 @@ set -e
 
 cp -r /usr/src/app/public /usr/src
 
-if [ "${*}" == "./usr/src/app/bin/rails server" ]; then
-	rm -f /usr/src/app/tmp/pids/server.pid
-	/usr/src/app/bin/rails db:prepare
+if [ "${1}" == "./bin/rails server" ]; then
+    rm -f /usr/src/tmp/pids/server.pid
+    ./bin/rails db:prepare
 fi
 
 exec "$@"
+
