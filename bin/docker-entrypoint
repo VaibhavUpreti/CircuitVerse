@@ -2,12 +2,12 @@
 
 set -e
 
-cp -r /usr/src/app/public /usr/src
+# cp -r /usr/src/app/public /usr/src
 
 if [ "${1}" == "./bin/rails server" ]; then
+	echo "Running Migrations"
     rm -f /usr/src/tmp/pids/server.pid
     ./bin/rails db:prepare
 fi
 
 exec "$@"
-

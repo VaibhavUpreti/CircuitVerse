@@ -4,6 +4,9 @@ servers:
   web:
     hosts:
       - <%= ENV["SERVER_IP"] %>
+    cmd: bin/rails server -b 0.0.0.0 -p 3001
+    labels:
+      traefik.http.routers.circuitverse-web.rule: Host(`cv-mrsk.vaibhavupreti.me`)
     options:
       "add-host": host.docker.internal:host-gateway
     volumes:
@@ -11,7 +14,7 @@ servers:
   sidekiq:
     hosts:
       - <%= ENV["SERVER_IP"] %>
-    cmd: bundle exec sidekiq -e production -q default -q mailers -d -L tmp/sidekiq.log
+    cmd: bundle exec sidekiq -e production -q default -q mailers
 
 registry:
   server: ghcr.io
@@ -62,7 +65,3 @@ traefik:
     traefik.http.routers.dashboard.service: "api@internal"
     traefik.http.routers.dashboard.middlewares: "auth"
     traefik.http.middlewares.auth.basicauth.users: test:$2y$05$H2o72tMaO.TwY1wNQUV1K.fhjRgLHRDWohFvUZOJHBEtUXNKrqUKi
-
-labels:
-  traefik.http.routers.circuitverse-web.rule: Host(`cv-mrsk.vaibhavupreti.me`)
-  # traefik.http.services.circuitverse.loadbalancer.server.port: 8080
