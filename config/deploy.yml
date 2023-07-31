@@ -6,16 +6,15 @@ servers:
       - <%= ENV["SERVER_IP"] %>
     options:
       "add-host": host.docker.internal:host-gateway
-
-  #sidekiq:
-  #  hosts:
-  #    - host.ip
-  #  cmd: bundle exec sidekiq -e production -q default -q mailers -d -L tmp/sidekiq.log
-  #  options:
-  #    cap-add: true
-  #    cpu-count: 4
-  #
-  # docker run ... --cap-add --cpu-count 4 ...
+    volumes:
+      - "/home/ubuntu/public:/usr/src/app/public"
+  sidekiq:
+    hosts:
+      - <%= ENV["SERVER_IP"] %>
+    cmd: bundle exec sidekiq -e production -q default -q mailers -d -L tmp/sidekiq.log
+    options:
+      cap-add: true
+      cpu-count: 1
 
 registry:
   server: ghcr.io
