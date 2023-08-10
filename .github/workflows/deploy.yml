@@ -1,11 +1,5 @@
 name: Deploy to Server
-on:
-  workflow_run:
-    workflows:
-      - Docker publish
-    types:
-      - completed
-
+on: workflow_dispatch
 concurrency: production
 
 jobs:
