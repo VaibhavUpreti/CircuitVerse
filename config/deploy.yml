@@ -15,6 +15,8 @@ servers:
     hosts:
       - <%= ENV["SERVER_IP"] %>
     cmd: bundle exec sidekiq -e production -q default -q mailers
+    options:
+      "add-host": host.docker.internal:host-gateway
 
 registry:
   server: ghcr.io

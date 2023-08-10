@@ -2,19 +2,15 @@ name: Deploy to Server
 on:
   push:
     branches:
-      - master
+      - main
+  pull_request:
+    branches: [ main ]
+
 concurrency: production
 
   workflow_run:
     workflows:
-      - 'codeql-analysis.yml'
-      - 'codeql.yml'
-      - 'docker-compose.yml'
       - 'docker-publish.yml'
-      - 'docs.yml'
-      - 'jest.yml'
-      - 'language_checker.yml'
-      - 'rubyonrails.yml'
     types:
       - completed
 
@@ -32,7 +28,7 @@ jobs:
       - name: Set Up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 'your-ruby-version-here'
+          ruby-version: '3.2.0'
 
       - name: Install mrsk
         run: gem install mrsk
