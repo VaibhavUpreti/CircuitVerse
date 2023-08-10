@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - master
+concurrency: production
+
   workflow_run:
     workflows:
       - 'codeql-analysis.yml'
@@ -19,6 +21,10 @@ on:
 jobs:
   deploy-job:
     runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: cv-mrsk.vaibhavupreti.me
+
     steps:
       - name: Check Out Code
         uses: actions/checkout@v2
@@ -38,33 +44,19 @@ jobs:
 
       - name: Release acquired locks
         run: mrsk lock release
+        env:
+          RAILS_SERVE_STATIC_FILES: true
+          AWS_S3_ACCESS_KEY_ID: ${{ secrets.AWS_S3_ACCESS_KEY_ID }}
+          AWS_S3_SECRET_ACCESS_KEY: ${{ secrets.AWS_S3_SECRET_ACCESS_KEY }}
+          BUGSNAG_API_KEY: ${{ secrets.BUGSNAG_API_KEY }}
+          MRSK_GHCR_REGISTRY_PASSWORD: ${{ secrets.MRSK_GHCR_REGISTRY_PASSWORD }}
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+          REDIS_URL: ${{ secrets.REDIS_URL }}
+          POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+          SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
+          RECAPTCHA_SITE_KEY: ${{ secrets.RECAPTCHA_SITE_KEY }}
+          RECAPTCHA_SECRET_KEY: ${{ secrets.RECAPTCHA_SECRET_KEY }}
 
       - name: Deploy with mrsk
         run: mrsk deploy -vvvv --skip_push
-
-
-      # Either install docker and run mrsk deploy on the runner
-      # or run with --skip_push
-      # Not needed
-      - name: SSH into AWS EC2 instance
-        uses: webfactory/ssh-agent@v0.5.1
-        with:
-          ssh-private-key: ${{ secrets.AWS_SSH_PRIVATE_KEY }}
-          known_hosts: ${{ secrets.AWS_KNOWN_HOSTS }}
-
-      # Extras
-      - name: SSH into the Server
-        env:
-          MRSK_REGISTRY_PASSWORD: ${{ secrets.MRSK_REGISTRY_PASSWORD }}
-          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          HOSTNAME: ${{secrets.SSH_HOST}}
-          USER_NAME: ${secrets.USER_NAME}
-        run: ssh -i ssh-private-key ${USER_NAME}@${HOSTNAME}
-
-      - name: Change Directory on AWS EC2 instance
-        run: cd /ubuntu/home/main/CircuitVerse
-
-      - name: Update Codebase
-        run: git pull
-
