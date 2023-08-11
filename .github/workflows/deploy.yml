@@ -1,6 +1,10 @@
 name: Deploy to Server
-on: workflow_dispatch
-concurrency: production
+on:
+  pull_request:
+    branches: [ master, main ]
+
+concurrency:
+  group: production
 
 jobs:
   deploy-job:
@@ -31,7 +35,6 @@ jobs:
 
       - name: Deploy with mrsk
         run: |
-          mrsk lock release
           mrsk deploy -vvvv
         env:
           RAILS_SERVE_STATIC_FILES: true
