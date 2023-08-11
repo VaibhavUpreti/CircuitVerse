@@ -2,10 +2,9 @@
 
 set -e
 
-# cp -r /usr/src/app/public /usr/src
-
-if [ "${1}" == "./bin/rails server -b 0.0.0.0 -p 3001" ]; then
+if [ "${*}" == "./bin/rails server -b 0.0.0.0 -p 3001" ]; then
 	echo "Running Migrations"
+	rm /usr/src/app/tmp/pids/server.pid
     ./bin/rails db:prepare
 fi
 
