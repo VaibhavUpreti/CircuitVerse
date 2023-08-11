@@ -46,8 +46,6 @@ ENV BUNDLE_WITHOUT="development:test"
 ENV RAILS_SERVE_STATIC_FILES="true"
 # ENV LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libjemalloc.so.2
 
-# ARG REDIS_URL="redis://localhost:6379"
-
 
 RUN apt-get update -qq && apt upgrade -y && apt-get install -y --no-install-recommends --auto-remove curl  \
    && curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
