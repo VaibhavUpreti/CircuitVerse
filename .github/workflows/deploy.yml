@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: production
-      url: cv-mrsk.vaibhavupreti.me
+      url: https://cv-mrsk.vaibhavupreti.me
 
     steps:
       - name: Configure SSH
