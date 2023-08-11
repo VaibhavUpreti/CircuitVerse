@@ -1,10 +1,13 @@
 name: Deploy to Server
 on:
-  pull_request:
-    branches: [ master, main ]
+  push:
+    branches:
+      - main # Change to master
+  workflow_dispatch:
 
 concurrency:
   group: production
+  cancel-in-progress: true
 
 jobs:
   deploy-job:
@@ -38,6 +41,7 @@ jobs:
 
       - name: Deploy with mrsk
         run: |
+          mrsk lock release
           mrsk deploy -vvvv
         env:
           RAILS_SERVE_STATIC_FILES: true
