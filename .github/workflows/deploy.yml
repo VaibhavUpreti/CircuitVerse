@@ -38,8 +38,6 @@ jobs:
 
       - name: Deploy with mrsk
         run: |
-          echo $REDIS_URL
-          echo $POSTGRES_URL
           mrsk deploy -vvvv
         env:
           RAILS_SERVE_STATIC_FILES: true
@@ -48,7 +46,6 @@ jobs:
           BUGSNAG_API_KEY: ${{ secrets.BUGSNAG_API_KEY }}
           MRSK_GHCR_REGISTRY_PASSWORD: ${{ secrets.MRSK_GHCR_REGISTRY_PASSWORD }}
           SERVER_IP: ${{ secrets.SERVER_IP }}
-          REDIS_URL: ${{ secrets.REDIS_URL }}
           POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
           SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
