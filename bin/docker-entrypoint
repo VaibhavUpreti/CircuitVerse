@@ -4,9 +4,9 @@ set -e
 
 if [ "${*}" == "./bin/rails server -b 0.0.0.0 -p 3001" ]; then
 	if [ -f /usr/src/app/tmp/pids/server.pid ]; then
-		echo "Remove server pid"
-        rm /usr/src/app/tmp/pids/server.pid
-    fi
+	  echo "Remove server pid"
+    rm /usr/src/app/tmp/pids/server.pid
+  fi
 	echo "Running Migrations"
 	./bin/rails db:prepare
 fi
