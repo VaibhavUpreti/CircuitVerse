@@ -17,6 +17,9 @@ jobs:
       - name: Check Out Code
         uses: actions/checkout@v2
 
+      - name: Copy sample database configuration
+        run: cp config/database.example.yml config/database.yml
+
       - name: Set Up Ruby
         uses: ruby/setup-ruby@v1
         with:
