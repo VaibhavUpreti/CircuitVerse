@@ -38,6 +38,8 @@ jobs:
 
       - name: Deploy with mrsk
         run: |
+          echo $REDIS_URL
+          echo $POSTGRES_URL
           mrsk deploy -vvvv
         env:
           RAILS_SERVE_STATIC_FILES: true
