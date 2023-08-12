@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 ruby:3.2.1 as builder
+FROM --platform=linux/amd64,linux/arm64 ruby:3.2.1 as builder
 # ARG BUILDPLATFORM
 ENV NODE_ENV=production
 ENV RAILS_ENV=production
@@ -33,7 +33,7 @@ RUN RAILS_ENV=production \
 RUN rm -rf node_modules spec
 RUN bundle exec bootsnap precompile --gemfile app/ lib/
 
-FROM --platform=linux/amd64 ruby:3.2.1-slim as app
+FROM --platform=linux/amd64,linux/arm64 ruby:3.2.1-slim as app
 
 COPY --from=builder /usr/src/app /usr/src/app
 
