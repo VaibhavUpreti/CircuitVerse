@@ -46,13 +46,19 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
+      - name: Lower Case repository
+        run: |
+          echo "REPO_NAME=${REPO,,}" >>${GITHUB_ENV}
+        env:
+          REPO: '${{ github.repository }}'
+
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
           file: Dockerfile.production
           context: .
           push: true
-          tags: ${{ github.repository }}:${{ github.sha }},${{ github.repository }}:latest
+          tags: ${{ var.REPO_NAME }}:${{ github.sha }},${{ var.REPO_NAME }}:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
