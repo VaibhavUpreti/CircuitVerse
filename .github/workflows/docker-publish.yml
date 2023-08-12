@@ -84,7 +84,7 @@ jobs:
           file: Dockerfile.production
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: $(echo $REPO_NAME):${{ github.sha }}, $(echo $REPO_NAME):latest
+          tags: vaibhavupreti/circuitverse:${{ github.sha }}, vaibhavupreti/circuitverse:latest
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64
           cache-from: type=gha
