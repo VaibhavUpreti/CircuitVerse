@@ -15,11 +15,24 @@ env:
 
 jobs:
   build-production:
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
       id-token: write
-    uses: vaibhavupreti/CircuitVerse/.github/workflows/docker-publish.yml@main # Change to master
+    steps:
+      - name: Check Out Code
+        uses: actions/checkout@v2
+
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          file: Dockerfile.production
+          context: .
+          push: true
+          tags: vaibhavupreti/circuitverse:${{ github.sha }}, vaibhavupreti/circuitverse:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   deploy-production:
     needs: build-production
