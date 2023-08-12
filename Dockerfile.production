@@ -1,10 +1,14 @@
-FROM --platform=linux/amd64,linux/arm64 ruby:3.2.1 as builder
+# Use a multi stage build for the builder
+FROM ruby:3.2.1 as builder
+
+# Set production environment
 # ARG BUILDPLATFORM
 ENV NODE_ENV=production
 ENV RAILS_ENV=production
 
-RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
-RUN apt-get update -qq && apt-get install -y --no-install-recommends --auto-remove nodejs imagemagick libvips
+# Install nodejs and necessary packages
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
+    && apt-get update -qq && apt-get install -y --no-install-recommends --auto-remove nodejs imagemagick libvips
 
 RUN npm install --global yarn
 
@@ -28,12 +32,12 @@ RUN RAILS_ENV=production \
     DATABASE_URL=postgres://nulldb \
 	DISABLE_FLIPPER=true \
     bundle exec rails assets:precompile && \
-    yarn cache clean
+    yarn cache clean && \
+	rm -rf node_modules spec
 
-RUN rm -rf node_modules spec
 RUN bundle exec bootsnap precompile --gemfile app/ lib/
 
-FROM --platform=linux/amd64,linux/arm64 ruby:3.2.1-slim as app
+FROM ruby:3.2.1-slim as app
 
 COPY --from=builder /usr/src/app /usr/src/app
 
