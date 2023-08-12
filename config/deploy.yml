@@ -60,7 +60,6 @@ traefik:
       - 8080:8080
     volume:
       - /tmp/example.json:/tmp/example.json
-    memory: 512m
   args:
     api.dashboard: true
   labels:
