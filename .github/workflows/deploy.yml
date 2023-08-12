@@ -15,6 +15,10 @@ env:
 
 jobs:
   build-production:
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
     uses: vaibhavupreti/CircuitVerse/.github/workflows/docker-publish.yml@main # Change to master
 
   deploy-production:
