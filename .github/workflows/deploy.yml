@@ -15,7 +15,7 @@ env:
 
 jobs:
   build-production:
-    uses: ./.github/workflows/docker-publish.yml
+    uses: vaibhavupreti/CircuitVerse/.github/workflows/docker-publish.yml@main
 
   deploy-production:
     needs: build-production
