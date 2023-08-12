@@ -27,6 +27,7 @@ env:
      RAILS_SERVE_STATIC_FILES: true
      PORT: 3001
      REDIS_URL: 'redis://172.17.0.1:6379/0'
+     AWS_REGION: 'us-west-2'
    secret:
      - RAILS_MASTER_KEY
      - POSTGRES_URL

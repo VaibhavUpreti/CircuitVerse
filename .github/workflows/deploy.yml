@@ -9,9 +9,16 @@ concurrency:
   group: production
   cancel-in-progress: true
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
 jobs:
   deploy-job:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     environment:
       name: production
       url: https://cv-mrsk.vaibhavupreti.me
@@ -36,14 +43,23 @@ jobs:
       - name: Install mrsk
         run: gem install mrsk
 
-      # Add docker caching
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
+
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          file: Dockerfile.production
+          context: .
+          push: true
+          tags: ${{ github.repository }}:${{ github.sha }},${{ github.repository }}:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: Deploy with mrsk
         run: |
           mrsk lock release
-          mrsk deploy -vvvv
+          mrsk deploy -vvvv --skip_push
         env:
           RAILS_SERVE_STATIC_FILES: true
           AWS_S3_ACCESS_KEY_ID: ${{ secrets.AWS_S3_ACCESS_KEY_ID }}
