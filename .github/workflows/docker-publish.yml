@@ -21,7 +21,7 @@ env:
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
-
+  REPO_NAME: 'vaibhavupreti/circuitverse'
 
 jobs:
   build:
@@ -76,12 +76,6 @@ jobs:
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
-
-      - name: LowerCase repository name
-        run: |
-          echo "REPO_NAME=${REPO,,}" >>${GITHUB_ENV}
-        env:
-          REPO: '${{ github.repository }}'
 
       - name: Build and push Docker image
         id: build-and-push
