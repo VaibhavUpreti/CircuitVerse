@@ -58,7 +58,7 @@ jobs:
           file: Dockerfile.production
           context: .
           push: true
-          tags: ${{ var.REPO_NAME }}:${{ github.sha }},${{ var.REPO_NAME }}:latest
+          tags: ${{ vars.REPO_NAME }}:${{ github.sha }},${{ vars.REPO_NAME }}:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
