@@ -20,6 +20,8 @@ jobs:
       packages: write
       id-token: write
     uses: vaibhavupreti/CircuitVerse/.github/workflows/docker-publish.yml@main
+    with:
+      tags: [ 'v*.*.*' ]
 
   deploy-production:
     needs: build-production
