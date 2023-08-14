@@ -20,19 +20,7 @@ jobs:
       contents: read
       packages: write
       id-token: write
-    steps:
-      - name: Check Out Code
-        uses: actions/checkout@v2
-
-      - name: Build and push
-        uses: docker/build-push-action@v4
-        with:
-          file: Dockerfile.production
-          context: .
-          push: true
-          tags: vaibhavupreti/circuitverse:${{ github.sha }}, vaibhavupreti/circuitverse:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+    uses: vaibhavupreti/CircuitVerse/.github/workflows/docker-publish.yml@main
 
   deploy-production:
     needs: build-production

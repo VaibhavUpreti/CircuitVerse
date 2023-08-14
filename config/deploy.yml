@@ -42,7 +42,6 @@ ssh:
   user: ubuntu
 
 builder:
-  multiarch: false
   dockerfile: Dockerfile.production
 
 accessories:
