@@ -75,7 +75,7 @@ jobs:
           file: Dockerfile.production
           context: .
           push: true
-          tags: $REPO_NAME:${{ github.sha }}, $REPO_NAME:latest #${{ steps.meta.outputs.tags}}
+          tags: vaibhavupreti/circuitverse:${{ github.sha }}, vaibhavupreti/circuitverse:latest #${{ steps.meta.outputs.tags}}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64, linux/arm64
           #cache-from: type=gha
