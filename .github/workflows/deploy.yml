@@ -15,6 +15,7 @@ concurrency:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  REPO_NAME: 'vaibhavupreti/circuitverse'
 
 jobs:
   build-production:
@@ -74,11 +75,11 @@ jobs:
           file: Dockerfile.production
           context: .
           push: true
-          tags: ${{ steps.meta.outputs.tags}}
+          tags: $REPO_NAME:${{ github.sha }}, $REPO_NAME:latest #${{ steps.meta.outputs.tags}}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64, linux/arm64
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          #cache-from: type=gha
+          #cache-to: type=gha,mode=max
 
   deploy-production:
     needs: build-production
