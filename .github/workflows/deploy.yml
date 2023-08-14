@@ -20,6 +20,8 @@ env:
 jobs:
   build-production:
     runs-on: ubuntu-latest
+    environment:
+      name: CircuitVerse-mrsk
     permissions:
       contents: read
       packages: write
