@@ -82,7 +82,6 @@ jobs:
       - name: Set Tags
         run: |
           echo IMAGE_REPOSITORY=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]') >> $GITHUB_ENV
-          echo REPO_OWNER=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]') >> $GITHUB_ENV
 
       - name: Build and push Docker image
         id: build-and-push
@@ -91,7 +90,7 @@ jobs:
           file: Dockerfile.production
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ env.REGISTRY }}/${{ env.REPO_OWNER }}/${{ env.IMAGE_REPOSITORY }}:${{ github.sha }},${{ env.REGISTRY }}/${{ env.REPO_OWNER }}/${{ env.IMAGE_REPOSITORY }}:latest
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}:${{ github.sha }},${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}:latest
           # tags: ${{ steps.meta.outputs.tags}}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64, linux/arm64

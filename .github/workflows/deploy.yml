@@ -2,10 +2,8 @@ name: Deploy to Server
 on:
   push:
     branches: [ main ] # change to master
-    tags: ['v*.*.*']
 
   workflow_dispatch:
-    # https://github.com/orgs/community/discussions/27028
 
 concurrency:
   group: production
@@ -13,11 +11,7 @@ concurrency:
 
 jobs:
   build-production:
-    # runs-on: ubuntu-latest
     uses: vaibhavupreti/CircuitVerse/.github/workflows/docker-publish.yml@main
-
-            #  tags: ghcr.io/vaibhavupreti/circuitverse:${{ github.sha }},ghcr.io/vaibhavupreti/circuitverse:latest
-            # labels: ${{ steps.meta.outputs.labels }}
 
   deploy-production:
     needs: build-production
@@ -29,9 +23,6 @@ jobs:
     steps:
       - name: Check Out Code
         uses: actions/checkout@v2
-
-      - name: Copy sample database configuration
-        run: cp config/database.example.yml config/database.yml
 
       - name: Configure SSH
         uses: webfactory/ssh-agent@v0.7.0
