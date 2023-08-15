@@ -59,6 +59,9 @@ RUN apt-get update -qq && apt upgrade -y && apt-get install -y --no-install-reco
    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
    && truncate -s 0 /var/log/*log
 
+ENV LD_PRELOAD="libjemalloc.so.2"
+ENV MALLOC_CONF="dirty_decay_ms:1000,narenas:2,background_thread:true"
+
 WORKDIR /usr/src/app
 
 ENTRYPOINT ["/usr/src/app/bin/docker-entrypoint"]
