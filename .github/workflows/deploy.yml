@@ -22,7 +22,9 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: CircuitVerse-mrsk
-    permissions: read-all
+    permissions:
+      contents: read
+      packages: write
 
     steps:
       - name: Checkout repository
@@ -58,7 +60,7 @@ jobs:
           file: Dockerfile.production
           context: .
           push: true
-          tags: ghcr.io/vaibhavupreti/circuitverse:${{ github.sha }}, ghcr.io/vaibhavupreti/circuitverse:latest
+          tags: ghcr.io/vaibhavupreti/circuitverse:${{ github.sha }},ghcr.io/vaibhavupreti/circuitverse:latest
             # labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64, linux/arm64
           cache-from: type=gha
