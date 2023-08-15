@@ -23,7 +23,9 @@ env:
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
-  REPO_NAME: 'vaibhavupreti/circuitverse'
+  IMAGE_REPOSITORY: $(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')
+  REPO_OWNER: $(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')
+  REPO_NAME: ${{ env.REPO_OWNER }}/${{ env.IMAGE_REPOSITORY }}
 
 jobs:
   build:
@@ -42,6 +44,7 @@ jobs:
 
       - name: Copy sample database configuration
         run: cp config/database.example.yml config/database.yml
+
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
       - name: Install cosign
@@ -86,7 +89,8 @@ jobs:
           file: Dockerfile.production
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags}}
+          tags: ${{ env.REGISTRY }}/${{ env.REPO_NAME }}:${{ github.sha }},${{ env.REGISTRY }}/${{ env.REPO_NAME }}:latest
+          # tags: ${{ steps.meta.outputs.tags}}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64, linux/arm64
           cache-from: type=gha
