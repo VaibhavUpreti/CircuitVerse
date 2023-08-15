@@ -16,6 +16,9 @@ jobs:
   deploy-production:
     needs: build-production
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     environment:
       name: production
       url: https://cv-mrsk.vaibhavupreti.me
@@ -46,7 +49,7 @@ jobs:
           AWS_S3_ACCESS_KEY_ID: ${{ secrets.AWS_S3_ACCESS_KEY_ID }}
           AWS_S3_SECRET_ACCESS_KEY: ${{ secrets.AWS_S3_SECRET_ACCESS_KEY }}
           BUGSNAG_API_KEY: ${{ secrets.BUGSNAG_API_KEY }}
-          MRSK_GHCR_REGISTRY_PASSWORD: ${{ secrets.MRSK_GHCR_REGISTRY_PASSWORD }}
+          MRSK_GHCR_REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
           SERVER_IP: ${{ secrets.SERVER_IP }}
           POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
