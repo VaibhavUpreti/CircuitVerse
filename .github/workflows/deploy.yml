@@ -4,8 +4,7 @@ on:
     branches: [ main ] # change to master
     tags: ['v*.*.*']
 
-  workflow_call:
-  # workflow_dispatch: # limitation: cannot access tags from another workflows
+  workflow_dispatch:
     # https://github.com/orgs/community/discussions/27028
 
 concurrency:
