@@ -15,11 +15,6 @@ concurrency:
 jobs:
   build-production:
     # runs-on: ubuntu-latest
-    environment:
-      name: CircuitVerse-mrsk
-    permissions:
-      contents: read
-      packages: write
     uses: vaibhavupreti/CircuitVerse/.github/workflows/docker-publish.yml@main
 
             #  tags: ghcr.io/vaibhavupreti/circuitverse:${{ github.sha }},ghcr.io/vaibhavupreti/circuitverse:latest
