@@ -1,5 +1,5 @@
 # Use a multi stage build for the builder
-FROM --platform=linux/amd64,linux/arm64 ruby:3.2.1 as builder
+FROM ruby:3.2.1 as builder
 
 # Set production environment
 # ARG BUILDPLATFORM
@@ -37,7 +37,7 @@ RUN RAILS_ENV=production \
 RUN rm -rf node_modules spec
 RUN bundle exec bootsnap precompile --gemfile app/ lib/
 
-FROM --platform=linux/amd64,linux/arm64 ruby:3.2.1-slim as app
+FROM ruby:3.2.1-slim as app
 
 COPY --from=builder /usr/src/app /usr/src/app
 
