@@ -10,11 +10,14 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build-production:
+  build-production-amd64:
     uses: vaibhavupreti/CircuitVerse/.github/workflows/docker-publish.yml@main # change to master
 
+  build-production-arm64:
+    uses: vaibhavupreti/CircuitVerse/.github/workflows/docker-publish-arm64.yml@main # change to master
+
   deploy-production:
-    needs: build-production
+    needs: [build-production-amd64, build-production-arm64]
     runs-on: ubuntu-latest
     permissions:
       contents: read
