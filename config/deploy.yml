@@ -20,13 +20,15 @@ registry:
   server: ghcr.io
   username: vaibhavupreti
   password:
-    - MRSK_GHCR_REGISTRY_PASSWORD
+    - KAMAL_GHCR_REGISTRY_PASSWORD
 
 env:
    clear:
      RAILS_SERVE_STATIC_FILES: true
      REDIS_URL: 'redis://172.17.0.1:6379/0'
      AWS_REGION: 'us-west-2'
+     AWS_REGION_SES: 'ap-south-1'
+     CIRCUITVERSE_EMAIL_ID: 'support@circuitverse.org'
      # :amazon_custom
      AWS_S3_REGION: 'us-west-2'
      AWS_S3_BUCKET_NAME: 'circuitverse-development'
