@@ -31,7 +31,7 @@ env:
     CIRCUITVERSE_EMAIL_ID: 'support@circuitverse.org'
     AWS_S3_REGION: 'us-west-2'
     AWS_S3_BUCKET_NAME: 'circuitverse-development'
-    YOSYS_PATH: 'http://0.0.0.0:3040'
+    YOSYS_PATH: 'http://172.17.0.1:3040'
   secret:
      - RAILS_MASTER_KEY
      - POSTGRES_URL
