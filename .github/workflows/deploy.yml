@@ -43,6 +43,7 @@ jobs:
       - name: Deploy with kamal
         run: |
           kamal lock release
+          # kamal traefik boot
           kamal redeploy -vvvv --skip_push
         env:
           RAILS_SERVE_STATIC_FILES: true
