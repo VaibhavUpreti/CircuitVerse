@@ -57,18 +57,3 @@ accessories:
 healthcheck:
   port: 3000
   max_attempts: 8
-
-traefik:
-  options:
-    publish:
-      - 8080:8080
-      - 443:443
-    volume:
-      - /tmp/example.json:/tmp/example.json
-  args:
-    entryPoints.web.address: ":80"
-    entryPoints.web.forwardedHeaders.trustedIPs:
-      -  <%= ENV["SERVER_IP"] %> # load balancer ip
-  labels:
-    traefik.enable: "true"
-
