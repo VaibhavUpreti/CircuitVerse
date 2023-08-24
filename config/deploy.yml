@@ -69,4 +69,6 @@ traefik:
     entryPoints.web.address: ":80"
     entryPoints.web.forwardedHeaders.trustedIPs:
       -  <%= ENV["SERVER_IP"] %> # load balancer ip
+  labels:
+    traefik.enable: "true"
 
