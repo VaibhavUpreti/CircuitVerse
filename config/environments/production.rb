@@ -29,6 +29,7 @@ Rails.application.configure do
   else
     config.active_storage.service = :amazon
   end
+
   # Assume SSL rails
   config.assume_ssl = true
   # Force all requests to https
