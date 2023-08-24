@@ -192,5 +192,3 @@ gem "noticed", "~> 1.6"
 # ActiveStorage AWS S3 + Variant Processing
 gem "aws-sdk-s3", "~> 1.116"
 gem "image_processing", "~> 1.12"
-
-gem "mrsk"
