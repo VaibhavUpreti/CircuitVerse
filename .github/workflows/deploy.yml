@@ -11,7 +11,7 @@ concurrency:
 
 jobs:
   build-production:
-    uses: CircuitVerse/CircuitVerse/.github/workflows/docker-publish.yml@master # change to master
+    uses: vaibhavupreti/CircuitVerse/.github/workflows/docker-publish.yml@main # change to master
 
   deploy-production:
     needs: build-production
