@@ -6,10 +6,6 @@ on:
         description: "Run Kamal command"
         default: "kamal app details"
 
-concurrency:
-  group: production
-  cancel-in-progress: true
-
 jobs:
   run-command:
     runs-on: ubuntu-latest
