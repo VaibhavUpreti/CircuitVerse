@@ -25,14 +25,14 @@ registry:
 env:
   clear:
     RAILS_SERVE_STATIC_FILES: true
-    REDIS_URL: 'redis://host.docker.internal:6379/0'
+    REDIS_URL: 'redis://172.17.0.1:6379/0'
     AWS_REGION: 'us-west-2'
     AWS_REGION_SES: 'ap-south-1'
     CIRCUITVERSE_EMAIL_ID: 'support@circuitverse.org'
     AWS_S3_REGION: 'us-west-2'
     AWS_S3_BUCKET_NAME: 'circuitverse-development'
-    YOSYS_PATH: 'http://host.docker.internal:3040'
-    POSTGRES_URL: 'postgresql://postgres:postgres@host.docker.internal:5432/circuitverse_production'
+    YOSYS_PATH: 'http://172.17.0.1:3040'
+    POSTGRES_URL: 'postgresql://postgres:postgres@172.17.0.1:5432/circuitverse_production'
   secret:
     - RAILS_MASTER_KEY
     - AWS_S3_ACCESS_KEY_ID
