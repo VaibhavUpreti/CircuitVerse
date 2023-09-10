@@ -1,12 +1,11 @@
 # Use a multi stage build for the builder
-FROM ruby:3.2.1 as builder
+FROM --platform=$BUILDPLATFORM ruby:3.2.1 as builder
 
 # Set production environment
-# ARG BUILDPLATFORM
+ARG BUILDPLATFORM
 ENV NODE_ENV=production
 ENV RAILS_ENV=production
 
-# Install nodejs and necessary packages
 RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
 RUN apt-get update -qq && apt-get install -y --no-install-recommends --auto-remove nodejs imagemagick libvips
 
@@ -26,20 +25,41 @@ RUN bundle install \
    && rm -rf vendor/bundle/ruby/3.1.0/cache/*
 
 COPY . .
+# Remove the Vue simulator directory (since it's being handled separately in another stage)
+RUN rm -rf cv-frontend-vue
 
 RUN RAILS_ENV=production \
     SECRET_KEY_BASE=1 \
     DATABASE_URL=postgres://nulldb \
 	DISABLE_FLIPPER=true \
     bundle exec rails assets:precompile && \
-    yarn cache clean
+	yarn cache clean
 
 RUN rm -rf node_modules spec
+
+# Precompile the Bootsnap cache for the specified directories to optimize boot time in production.
 RUN bundle exec bootsnap precompile --gemfile app/ lib/
 
-FROM ruby:3.2.1-slim as app
+# Build stage for the Vue simualtor
+FROM --platform=$BUILDPLATFORM node:18.11-slim as simulator_vue_build
 
+RUN mkdir -p /public/
+
+WORKDIR /app
+
+# Copy package files and install Vue simulator dependecies
+COPY cv-frontend-vue/package.json cv-frontend-vue/package-lock.json ./
+RUN npm install --ignore-scripts
+COPY cv-frontend-vue/ ./
+
+# Build Vue simualtor
+RUN npm run build
+
+FROM --platform=$BUILDPLATFORM ruby:3.2.1-slim as app
+
+# Copy compiled assets and application from builder and Vue simulator build stages
 COPY --from=builder /usr/src/app /usr/src/app
+COPY --from=simulator_vue_build /public/simulatorvue /usr/src/app/public/simulatorvue
 
 ENV NODE_ENV=production
 ENV RAILS_ENV=production
@@ -65,10 +85,3 @@ WORKDIR /usr/src/app
 ENTRYPOINT ["/usr/src/app/bin/docker-entrypoint"]
 
 EXPOSE 3000
-
-# CMD ["./bin/rails", "server", "-b", "0.0.0.0", "-p", "3001"]
-
-#CMD["./bin/rails", "server", "-b 0.0.0.0", "-p 3001"]
-# CMD rm -f tmp/pids/server.pid \
-#   && bundle exec rails db:migrate \
-#   && bundle exec rails s -b 0.0.0.0 -p 3001
