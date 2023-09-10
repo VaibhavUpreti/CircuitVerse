@@ -1,42 +1,24 @@
 service: circuitverse
-<<<<<<< HEAD
 image: vaibhavupreti/circuitverse
-=======
-image: circuitverse/circuitverse
->>>>>>> circuitverse/master
 servers:
   web:
     hosts:
       - <%= ENV["SERVER_IP"] %>
     cmd: ./bin/rails server -b 0.0.0.0 -p 3000
     labels:
-<<<<<<< HEAD
       traefik.http.routers.circuitverse-web.rule: Host(`cv-mrsk.vaibhavupreti.me`)
     options:
       add-host: host.docker.internal:host-gateway
-=======
-      traefik.http.routers.circuitverse-web.rule: Host(`staging.circuitverse.org`)
-    options:
-      "add-host": host.docker.internal:host-gateway
->>>>>>> circuitverse/master
   sidekiq:
     hosts:
       - <%= ENV["SERVER_IP"] %>
     options:
-<<<<<<< HEAD
       add-host: host.docker.internal:host-gateway
-=======
-      "add-host": host.docker.internal:host-gateway
->>>>>>> circuitverse/master
     cmd: bundle exec sidekiq -e production -q default -q mailers
 
 registry:
   server: ghcr.io
-<<<<<<< HEAD
   username: vaibhavupreti
-=======
-  username: circuitverse
->>>>>>> circuitverse/master
   password:
     - KAMAL_GHCR_REGISTRY_PASSWORD
 
@@ -44,7 +26,6 @@ env:
   clear:
     RAILS_SERVE_STATIC_FILES: true
     REDIS_URL: 'redis://172.17.0.1:6379/0'
-<<<<<<< HEAD
     AWS_REGION: 'us-west-2'
     AWS_REGION_SES: 'ap-south-1'
     CIRCUITVERSE_EMAIL_ID: 'support@circuitverse.org'
@@ -54,17 +35,6 @@ env:
     POSTGRES_URL: 'postgresql://postgres:postgres@172.17.0.1:5432/circuitverse_production'
   secret:
     - RAILS_MASTER_KEY
-=======
-    AWS_REGION: 'ap-south-1'
-    AWS_REGION_SES: 'ap-south-1'
-    CIRCUITVERSE_EMAIL_ID: 'support@circuitverse.org'
-    AWS_S3_REGION: 'ap-south-1'
-    AWS_S3_BUCKET_NAME: 'circuitverse-images-dev'
-    YOSYS_PATH: 'http://172.17.0.1:3040'
-  secret:
-    - RAILS_MASTER_KEY
-    - POSTGRES_URL
->>>>>>> circuitverse/master
     - AWS_S3_ACCESS_KEY_ID
     - AWS_S3_SECRET_ACCESS_KEY
     - SECRET_KEY_BASE
@@ -82,7 +52,6 @@ accessories:
   yosys2digitaljs-server:
     image: ghcr.io/circuitverse/yosys2digitaljs-server:master
     host: <%= ENV["SERVER_IP"] %>
-<<<<<<< HEAD
     port: 3040
     options:
       add-host: host.docker.internal:host-gateway
@@ -90,9 +59,6 @@ accessories:
 traefik:
   options:
     memory: 512m
-=======
-    port: 2812
->>>>>>> circuitverse/master
 
 healthcheck:
   port: 3000
