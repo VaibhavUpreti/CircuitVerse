@@ -42,9 +42,6 @@ jobs:
       - name: Copy sample database configuration
         run: cp config/database.example.yml config/database.yml
 
-      - name: Copy sample database configuration
-        run: cp config/database.example.yml config/database.yml
-
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
       - name: Install cosign
@@ -96,4 +93,3 @@ jobs:
           platforms: linux/amd64
           cache-from: type=gha
           cache-to: type=gha,mode=max
-

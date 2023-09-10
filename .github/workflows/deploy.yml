@@ -2,7 +2,6 @@ name: Deploy to Server
 on:
   push:
     branches: [ main ] # change to master
-
   workflow_dispatch:
 
 concurrency:
@@ -53,7 +52,6 @@ jobs:
           BUGSNAG_API_KEY: ${{ secrets.BUGSNAG_API_KEY }}
           KAMAL_GHCR_REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
           SERVER_IP: ${{ secrets.SERVER_IP }}
-          #          POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
           SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
           RECAPTCHA_SITE_KEY: ${{ secrets.RECAPTCHA_SITE_KEY }}
