@@ -1,4 +1,4 @@
-name: Docker publish
+name: Docker publish AMD64
 
 # This workflow uses actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by
@@ -53,7 +53,7 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
         with:
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
 
       - name: Setup Docker buildx
         uses: docker/setup-buildx-action@v2
@@ -90,6 +90,6 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}:${{ github.sha }},${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}:latest
           labels: ${{ steps.meta.outputs.labels }}
-          platforms: linux/amd64, linux/arm64
+          platforms: linux/amd64
           cache-from: type=gha
           cache-to: type=gha,mode=max

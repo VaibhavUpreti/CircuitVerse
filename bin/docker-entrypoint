@@ -2,6 +2,9 @@
 
 set -e
 
+echo "Export Indented keys to env"
+source ./bin/indent-keys
+
 if [ "${*}" == "./bin/rails server -b 0.0.0.0 -p 3000" ]; then
   if [ -f /usr/src/app/tmp/pids/server.pid ]; then
     echo "Remove server pid"
