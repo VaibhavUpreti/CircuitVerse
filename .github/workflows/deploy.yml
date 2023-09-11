@@ -41,8 +41,8 @@ jobs:
     
       - name: Retrieve the secret keys and export to environment variables
         run: |
-          echo "${{ secrets.VAPID_PUBLIC_KEY }}" | tr -d '\n' > config/public.pem
-          echo "${{ secrets.VAPID_PRIVATE_KEY }}" | tr -d '\n' > config/private.pem
+          echo -n "${{ secrets.VAPID_PUBLIC_KEY }}" > config/public.pem
+          echo -n "${{ secrets.VAPID_PRIVATE_KEY }}" > config/private.pem
 
       - name: Deploy with kamal
         run: |
