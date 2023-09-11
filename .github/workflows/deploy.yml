@@ -41,8 +41,6 @@ jobs:
    
       - name: Deploy with kamal
         run: |
-          export VAPID_PUBLIC_KEY=$(echo -n "${{ secrets.VAPID_PUBLIC_KEY }}" | sed 's/\\n/\n/g')
-          export VAPID_PRIVATE_KEY=$(echo -n "${{ secrets.VAPID_PRIVATE_KEY }}" | sed 's/\\n/\n/g')
           kamal lock release
           kamal accessory boot yosys2digitaljs-server || true
           kamal traefik boot || true
@@ -58,3 +56,5 @@ jobs:
           SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
           RECAPTCHA_SITE_KEY: ${{ secrets.RECAPTCHA_SITE_KEY }}
           RECAPTCHA_SECRET_KEY: ${{ secrets.RECAPTCHA_SECRET_KEY }}
+          VAPID_PUBLIC_KEY: ${{ secrets.VAPID_PUBLIC_KEY }}
+          VAPID_PRIVATE_KEY: ${{ secrets.VAPID_PRIVATE_KEY }}
