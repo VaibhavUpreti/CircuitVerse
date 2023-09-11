@@ -2,6 +2,10 @@
 
 set -e
 
+echo "Indent keys"
+export VAPID_PUBLIC_KEY=$(echo -n "$VAPID_PUBLIC_KEY" | sed 's/\\n/\n/g')
+export VAPID_PRIVATE_KEY=$(echo -n "$VAPID_PRIVATE_KEY" | sed 's/\\n/\n/g')
+
 if [ "${*}" == "./bin/rails server -b 0.0.0.0 -p 3000" ]; then
   if [ -f /usr/src/app/tmp/pids/server.pid ]; then
     echo "Remove server pid"
