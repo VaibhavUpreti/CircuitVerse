@@ -11,6 +11,7 @@ test_results
 tmp
 
 public/assets/
+public/simulatorvue
 
 /config/database.yml
 /config/secrets.yml
@@ -96,6 +97,7 @@ node_modules
 
 # ignore rbs collection
 .gem_rbs_collection
+/config/credentials/production.key
 
 # Ignore vendor folder generated in Gitpod Environment
 vendor/
