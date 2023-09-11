@@ -61,5 +61,5 @@ jobs:
           SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
           RECAPTCHA_SITE_KEY: ${{ secrets.RECAPTCHA_SITE_KEY }}
           RECAPTCHA_SECRET_KEY: ${{ secrets.RECAPTCHA_SECRET_KEY }}
-          VAPID_PUBLIC_KEY: cat "$(pwd)/config/public.pem" 
-          VAPID_PRIVATE_KEY: cat "$(pwd)/config/private.pem"
+          VAPID_PUBLIC_KEY: "$(cat "$(pwd)/config/public.pem")"
+          VAPID_PRIVATE_KEY: "$(cat "$(pwd)/config/private.pem")"
